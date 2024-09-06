@@ -41,9 +41,13 @@ public class DAOPais {
     }
     
     public Pais buscarPaisPorNombre(String nombre) {
-        TypedQuery<Pais> query = em.createQuery("SELECT p FROM Pais p WHERE p.nombre = :nombre AND p.eliminado = FALSE",Pais.class);
-        query.setParameter("nombre",nombre);
-        return query.getSingleResult();
+        try {
+            TypedQuery<Pais> query = em.createQuery("SELECT p FROM Pais p WHERE p.nombre = :nombre AND p.eliminado = FALSE",Pais.class);
+            query.setParameter("nombre",nombre);
+            return query.getSingleResult();
+        }catch (NoResultException e){
+            throw e;
+        }
     }
     
     public Collection<Pais> listarPaisActivo(){

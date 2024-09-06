@@ -55,6 +55,7 @@ public class PaisServiceBean {
             }
         }catch (IllegalArgumentException | NoResultException e){
             e.getMessage();
+            throw e;
         }
         return null;
     }
@@ -69,16 +70,20 @@ public class PaisServiceBean {
                 throw new IllegalArgumentException("Indique el nombre del pais");
             }
             
-            Pais paisExistente = dao.buscarPaisPorNombre(nombre); // Verifico si ya hay un pais con ese nombre
+            try {
+                Pais paisExistente = dao.buscarPaisPorNombre(nombre); // Verifico si ya hay un pais con ese nombre
+
+                if (!paisExistente.getId().equals(id)){
+                    throw new IllegalArgumentException("Ya existe un pais con ese nombre");
+                }
+            }catch (NoResultException e){}
             
-            if (!paisExistente.getId().equals(id)){
-                throw new IllegalArgumentException("Ya existe un pais con ese nombre");
-            }
             
             pais.setNombre(nombre);
             dao.actualizarPais(pais);
         } catch (Exception e){
             e.getMessage();
+            throw e;
         }
     }
    
@@ -90,6 +95,7 @@ public class PaisServiceBean {
             dao.actualizarPais(pais); 
         }catch (Exception e){
             e.getMessage();
+            throw e;
         }
 
     }
@@ -100,8 +106,8 @@ public class PaisServiceBean {
             
         } catch (Exception e){
             e.getMessage();
+            throw e;
         }
-        return null;
     }
     
     

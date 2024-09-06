@@ -60,7 +60,7 @@ public class Pais implements Serializable {
 
     @Override
     public String toString() {
-        return "com.consorcio.direccion.Pais[ id=" + id + " ]";
+        return "com.direccion.pais.Pais[ id=" + id + " ]";
     }
 
     public String getNombre() {
